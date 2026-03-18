@@ -7,20 +7,49 @@ import { FiPhoneCall } from "react-icons/fi";
 
 const Footer = () => {
   return (
-    <footer className="border-t border-gray-300 py-12" style={{position: 'relative', zIndex: '9999', background: '#fff'}}>
-      
+    <footer
+      className="border-t border-gray-300 py-12"
+      style={{ position: "relative", zIndex: "9999", background: "#fff" }}
+    >
       {/* MAIN FOOTER */}
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-
           {/* Shop */}
           <div>
             <h3 className="text-lg mb-4">Shop</h3>
             <ul className="space-y-2 text-sm text-gray-600">
-              <li><Link to="#" className="hover:text-black">Men's Top Wear</Link></li>
-              <li><Link to="#" className="hover:text-black">Women's Top Wear</Link></li>
-              <li><Link to="#" className="hover:text-black">Men's Bottom Wear</Link></li>
-              <li><Link to="#" className="hover:text-black">Women's Bottom Wear</Link></li>
+              <li>
+                <Link
+                  to="/collections/all/?gender=Men&category=Top+Wear"
+                  className="hover:text-black"
+                >
+                  Men's Top Wear
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/collections/all/?gender=Women&category=Top+Wear"
+                  className="hover:text-black"
+                >
+                  Women's Top Wear
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/collections/all/?gender=Men&category=Bottom+Wear"
+                  className="hover:text-black"
+                >
+                  Men's Bottom Wear
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/collections/all/?gender=Women&category=Bottom+Wear"
+                  className="hover:text-black"
+                >
+                  Women's Bottom Wear
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -28,9 +57,29 @@ const Footer = () => {
           <div>
             <h3 className="text-lg  mb-4">Follow Us</h3>
             <div className="flex items-center text-gray-600 gap-4 mb-4">
-              <TbBrandMeta className="h-5 w-5 hover:text-black" />
-              <IoLogoInstagram className="h-5 w-5 hover:text-black" />
-              <RiTwitterXFill className="h-5 w-5 hover:text-black" />
+              <a
+                href="https://www.facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <TbBrandMeta className="h-5 w-5 hover:text-gray-300 cursor-pointer" />
+              </a>
+
+              <a
+                href="https://www.instagram.com/iamshayu/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <IoLogoInstagram className="h-5 w-5 hover:text-gray-300 cursor-pointer" />
+              </a>
+
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <RiTwitterXFill className="h-4 w-4 hover:text-gray-300 cursor-pointer" />
+              </a>
             </div>
             <p className="text-gray-800 mb-1">Call Us</p>
             <p className="flex items-center text-gray-600 hover:text-black text-sm">
@@ -43,18 +92,35 @@ const Footer = () => {
           <div>
             <h3 className="text-lg  mb-4">Support</h3>
             <ul className=" space-y-2 text-sm text-gray-600">
-              <li><Link to="#" className="hover:text-black">Contact Us</Link></li>
-              <li><Link to="#" className="hover:text-black">About Us</Link></li>
-              <li><Link to="#" className="hover:text-black">FAQs</Link></li>
-              <li><Link to="#" className="hover:text-black">Features</Link></li>
+              <li>
+                <Link to="#" className="hover:text-black">
+                  Contact Us
+                </Link>
+              </li>
+              <li>
+                <Link to="#" className="hover:text-black">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link to="#" className="hover:text-black">
+                  FAQs
+                </Link>
+              </li>
+              <li>
+                <Link to="#" className="hover:text-black">
+                  Features
+                </Link>
+              </li>
             </ul>
           </div>
-                    
+
           {/* Newsletter */}
           <div>
-            <h3 className= "text-lg mb-4">Newsletter</h3>
+            <h3 className="text-lg mb-4">Newsletter</h3>
             <p className="text-gray-600 mb-4 text-sm">
-              Be the first to hear about new products, exclusive events, and online offers.
+              Be the first to hear about new products, exclusive events, and
+              online offers.
             </p>
             <p className="mb-6 text-sm text-gray-600">
               Sign up & get 10% off on your first order.
@@ -74,7 +140,6 @@ const Footer = () => {
               </button>
             </form>
           </div>
-
         </div>
       </div>
 
@@ -86,7 +151,6 @@ const Footer = () => {
           </p>
         </div>
       </div>
-
     </footer>
   );
 };

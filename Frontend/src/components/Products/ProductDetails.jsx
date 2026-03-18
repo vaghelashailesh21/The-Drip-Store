@@ -146,14 +146,14 @@ const ProductDetails = ({ productId }) => {
 
           {/* Right side content of product */}
           <div className="md:w-1/2 md:ml-10">
-            <h1 className="text-2xl md:text-3xl font-semibold mb-2">
+            <h1 className="text-xl md:text-xl lg:text-2xl font-semibold mb-2">
               {selectedProduct.name}
             </h1>
-            <span className="text-lg font-bold text-gray-800 pr-2">
+            <span className="text-md md:text-lg lg:text-lg font-bold text-gray-800 pr-2">
               ${selectedProduct.price &&
                 `${selectedProduct.price}`}
             </span>
-            <p className="text-gray-700 mt-2 mb-4 ">
+            <p className="text-gray-700 text-xs md:text-sm lg:text-lg mt-2 mb-4 ">
               {selectedProduct.description}
             </p>
 
@@ -168,7 +168,7 @@ const ProductDetails = ({ productId }) => {
                     onClick={() =>
                       setSelectedColor((prev) => (prev === color ? "" : color))
                     }
-                    className={`w-8 h-8 rounded-full border ${selectedColor === color ? "border-3 border-black" : "border-gray-300"} `}
+                    className={`w-6 h-6 lg:w-8 lg:h-8 md:w-7 md:h-7  rounded-full border ${selectedColor === color ? "border-3 border-black" : "border-gray-300"} `}
                     style={{ backgroundColor: color.toLocaleLowerCase() }}
                   ></button>
                 ))}
@@ -266,7 +266,7 @@ const ProductDetails = ({ productId }) => {
           </div>
         </div>
 
-        <div className="mt-20">
+        <div className="mt-15 lg:mt-15 md:mt-20 ">
           <h2 className="text-2xl text-center mb-4 font-medium">
             You May Also Like
           </h2>

@@ -35,6 +35,15 @@ const Navbar = () => {
         <div>
           <Link
             to="/"
+            onClick={() => {
+              const container = document.getElementById("main-scroll");
+              if (container) {
+                container.scrollTo({
+                  top: 0,
+                  behavior: "smooth",
+                });
+              }
+            }}
             className="font-semibold 
              text-lg sm:text-xl md:text-2xl lg:text-3xl 
              tracking-tight whitespace-nowrap mr-0"
@@ -150,12 +159,14 @@ const Navbar = () => {
               Bottom wear
             </Link>
 
-            <Link
-              to="/admin"
-              className="bg-gray-900 text-xs lg:text-sm rounded text-white px-2 py-1  md:flex"
-            >
-              Admin
-            </Link>
+            {user && user.role === "admin" && (
+              <Link
+                to="/admin"
+                className="bg-gray-900 text-xs lg:text-sm rounded text-white px-2 py-1  md:flex"
+              >
+                Admin
+              </Link>
+            )}
           </nav>
         </div>
       </div>

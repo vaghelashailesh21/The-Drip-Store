@@ -18,7 +18,7 @@ const UserLayout = () => {
       </div>
 
       {/* SCROLLABLE CONTENT */}
-      <div className="flex-1  overflow-y-auto pt-[80px] lg:pt-[100px] md:pt-[100px]">
+      <div id="main-scroll" className=" flex-1  overflow-y-auto pt-[80px] lg:pt-[100px] md:pt-[100px]">
         <div className="max-w-screen mx-auto ">
           <Outlet />
           <Footer />

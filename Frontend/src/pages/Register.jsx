@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import register from "../assets/register.webp";
+import register from "../assets/Login.webp";
 import { registerUser } from "../Redux/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { mergeCart } from "../Redux/slices/cartSlice";
@@ -40,15 +40,20 @@ const Register = () => {
 
   return (
     <div className="flex">
-      <div className="w-full md:w-1/2 flex-col flex justify-center items-center p-8 md:p-12">
+      <div className="w-full md:w-1/2 flex-col flex justify-center items-center p-6 md:p-12 lg:p-0">
         <form 
-        className="w-full max-w-md bg-white rounded-lg border p-8 shadow-sm"
+        className="w-full max-w-md bg-white rounded-lg border p-6 lg:p-8  shadow-sm"
         onSubmit={handleSubmit}
         >
+
+          <h2 className="text-lg md:text-xl lg:text-2xl font-bold text-center mb-2 ">Hey There!👋</h2>
+          <h1 className=" text-center mb-2 ">Welcome To</h1>
           <div className="flex justify-center mb-6">
-            <h2 className="text-xl font-medium">The Drip Store</h2>
+            
+            <h2 className="text-lg md:text-xl lg:text-2xl font-bold">The Drip Store</h2>
           </div>
-          <h2 className="text-2xl font-bold text-center mb-6 ">Create Account</h2>
+          
+          <h2 className="text-lg md:text-xl lg:text-2xl  text-center mb-6 ">Create Account</h2>
           
           <div className="mb-4">
             <label className="block text-sm font-semibold mb-2">Name</label>
@@ -95,7 +100,7 @@ const Register = () => {
 
       <div className="hidden md:block w-1/2 bg-gray-800 ">
          <div className="h-full flex flex-col justify-center items-center">
-          <img src={register} alt="Login to account" className="w-full h-[600px] object-cover " />
+          <img src={register} alt="Login to account" className="w-full h-[650px] object-cover " />
          </div>
       </div>
     </div>

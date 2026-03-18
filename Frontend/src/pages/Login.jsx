@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import login from "../assets/Login.webp";
+import login from "../assets/WomenCollection.jpg";
 import { loginUser } from "../Redux/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { mergeCart } from "../Redux/slices/cartSlice";
@@ -37,22 +37,25 @@ const Login = () => {
 
   return (
     <div className="flex">
-      <div className="w-full md:w-1/2 flex-col flex justify-center items-center p-8 md:p-12">
-        <form className="w-full max-w-md bg-white rounded-lg border p-8 shadow-sm"
+      <div className="w-full md:w-1/2 flex-col flex justify-center items-center p-6 md:p-10 lg:p-0">
+        <form className="w-full max-w-md bg-white rounded-lg border p-6 lg:p-8 shadow-sm"
           onSubmit={handleSubmit}
         >
-          <div className="flex justify-center mb-6">
-            <h2 className="text-xl font-medium">The Drip Store</h2>
+          <h2 className="text-lg md:text-xl lg:text-2xl font-bold text-center mb-2 ">Hey There!👋</h2>
+          <h1 className=" text-center mb-2 ">Welcome To</h1>
+          <div className="flex justify-center mb-8">
+            
+            <h2 className="text-lg md:text-xl lg:text-2xl font-bold">The Drip Store</h2>
           </div>
-          <h2 className="text-2xl font-bold text-center mb-6 ">Hey There!👋</h2>
-          <p className="text-center mb-6">
-            Enter your email and password to Login
+          
+          <p className="text-center mb-8 text-xs md:text-xs lg:text- whitespace-nowrap">
+            Enter your e-mail and password to login
           </p>
           <div className="mb-4">
             <label className="block text-sm font-semibold mb-2">E-mail</label>
             <input
               type="email"
-              placeholder="Enter Your email address"
+              placeholder="Enter your e-mail"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full p-2 border rounded"

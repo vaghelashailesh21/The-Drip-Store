@@ -6,18 +6,21 @@ import { fetchOrderDetails } from "../Redux/slices/orderSlice";
 const OrderDetailsPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const {orderDetails, loading, error} = useSelector((state) => state.orders);
+  const { orderDetails, loading, error } = useSelector((state) => state.orders);
 
   useEffect(() => {
     dispatch(fetchOrderDetails(id));
   }, [dispatch, id]);
 
-  if(loading) return <p className="text-gray-600 items-center">Loading ...</p>
-  if(error) return <p className="text-gray-600 items-center">Error: {error}</p>
+  if (loading) return <p className="text-gray-600 items-center">Loading ...</p>;
+  if (error)
+    return <p className="text-gray-600 items-center">Error: {error}</p>;
 
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6">
-      <h2 className="text-2xl md:text-3xl font-bold mb-6">Order Details</h2>
+      <h2 className="text-xl lg:text-3xl md:text-2xl font-bold mb-6">
+        Order Details
+      </h2>
 
       {!orderDetails ? (
         <p>No Orders Details Found</p>
@@ -25,10 +28,10 @@ const OrderDetailsPage = () => {
         <div className="p-4 sm:p-6 rounded-lg border">
           <div className="flex flex-col sm:flex-row justify-between mb-8">
             <div>
-              <h3 className="text-lg md:text-xl font-semibold">
+              <h3 className="text-sm md:text-xl lg:text-xl font-semibold">
                 Order ID: #{orderDetails._id}
               </h3>
-              <p className="text-gray-500">
+              <p className="text-gray-500 text-sm md:text-xl lg:text-xl">
                 {new Date(orderDetails.createdAt).toLocaleDateString()}
               </p>
             </div>
@@ -39,7 +42,7 @@ const OrderDetailsPage = () => {
                   orderDetails.isPaid
                     ? "bg-green-100 text-green-700"
                     : "bg-red-100 text-red-700"
-                } px-3 py-1 rounded-full text-sm font-medium mb-2`}
+                } px-3 py-1 rounded-full text-xs md:text-sm lg:text-sm font-medium mb-2`}
               >
                 {orderDetails.isPaid ? "Approved" : "Pending"}
               </span>
@@ -48,7 +51,7 @@ const OrderDetailsPage = () => {
                   orderDetails.isDelivered
                     ? "bg-green-100 text-green-700"
                     : "bg-yellow-100 text-yellow-700"
-                } px-3 py-1 rounded-full text-sm font-medium mb-2`}
+                } px-3 py-1 rounded-full text-xs md:text-sm lg:text-sm font-medium mb-2`}
               >
                 {orderDetails.isDelivered ? "Delivered" : "Pending Delivery"}
               </span>
@@ -57,14 +60,24 @@ const OrderDetailsPage = () => {
           {/* Customer , payment , shipping address*/}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-8">
             <div>
-              <h4 className="text-lg">Payment Info</h4>
-              <p>Payment Method: {orderDetails.paymentMethod}</p>
-              <p>Status: {orderDetails.isPaid ? "Paid" : "Unpaid"}</p>
+              <h4 className="text-sm md:text-xl lg:text-xl font-semibold">
+                Payment Info
+              </h4>
+              <p className=" text-xs md:text-sm lg:text-sm">
+                Payment Method: {orderDetails.paymentMethod}
+              </p>
+              <p className=" text-xs md:text-sm lg:text-sm">
+                Status: {orderDetails.isPaid ? "Paid" : "Unpaid"}
+              </p>
             </div>
             <div>
-              <h4 className="text-lg">Shipping Info</h4>
-              <p>Shipping Method: {orderDetails.shippingMethod}</p>
-              <p>
+              <h4 className="text-sm md:text-xl lg:text-xl font-semibold">
+                Shipping Info
+              </h4>
+              <p className=" text-xs md:text-sm lg:text-sm">
+                Shipping Method: {orderDetails.shippingMethod}
+              </p>
+              <p className=" text-xs md:text-sm lg:text-sm">
                 Address:{" "}
                 {`${orderDetails.shippingAddress.city}, ${orderDetails.shippingAddress.state}`}
               </p>
@@ -73,14 +86,24 @@ const OrderDetailsPage = () => {
 
           {/* Product List */}
           <div className="overflow-x-auto">
-            <h3 className="text-lg font-semibold mb-4">Products</h3>
+            <h3 className="text-sm md:text-xl lg:text-xl font-semibold font-semibold mb-4">
+              Products
+            </h3>
             <table className="min-w-full text-gray-600 mb-4">
               <thead className="bg-gray-100">
                 <tr>
-                  <th className="py-2 px-4">Name</th>
-                  <th className="py-2 px-4">Unit Price</th>
-                  <th className="py-2 px-4">Quantity</th>
-                  <th className="py-2 px-4">Total</th>
+                  <th className="py-2 px-2 lg:py-2 lg:px-4 text-xs md:text-sm lg:text-sm whitespace-nowrap ">
+                    Name
+                  </th>
+                  <th className="py-2 px-2 lg:py-2 lg:px-4 text-xs md:text-sm lg:text-sm whitespace-nowrap ">
+                    Unit Price
+                  </th>
+                  <th className="py-2 px-2 lg:py-2 lg:px-4 text-xs md:text-sm lg:text-sm whitespace-nowrap ">
+                    Quantity
+                  </th>
+                  <th className="py-2 px-2 lg:py-2 lg:px-4 text-xs md:text-sm lg:text-sm whitespace-nowrap ">
+                    Total
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -94,14 +117,20 @@ const OrderDetailsPage = () => {
                       />
                       <Link
                         to={`/product/${item.productId}`}
-                        className="text-blue-500 hover:underline "
+                        className="text-blue-500 hover:underline text-xs md:text-sm lg:text-sm whitespace-nowrap pr-6 md:pl-10 lg:pl-20"
                       >
                         {item.name}
                       </Link>
                     </td>
-                    <td className="py-2 px-4">${item.price}</td>
-                    <td className="py-2 px-4">{item.quantity}</td>
-                    <td className="py-2 px-4">${item.price * item.quantity}</td>
+                    <td className="py-2 px-4 text-xs md:text-sm lg:text-sm whitespace-nowrap pr-6 md:pl-10 lg:pl-20">
+                      ${item.price}
+                    </td>
+                    <td className="py-2 px-4 text-xs md:text-sm lg:text-sm whitespace-nowrap pr-6 md:pl-10 lg:pl-20">
+                      {item.quantity}
+                    </td>
+                    <td className="py-2 px-4 text-xs md:text-sm lg:text-sm whitespace-nowrap pr-6 md:pl-10 lg:pl-20">
+                      ${item.price * item.quantity}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -109,8 +138,8 @@ const OrderDetailsPage = () => {
           </div>
 
           {/* Back to orders link */}
-          <Link to="/my-orders" className="text-blue-500 hover:underline">
-           Back To My Orders
+          <Link to="/my-orders" className="text-blue-500 text-xs md:text-sm lg:text-sm  hover:underline">
+            Back To My Orders
           </Link>
         </div>
       )}
