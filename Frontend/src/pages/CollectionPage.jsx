@@ -81,7 +81,14 @@ const CollectionPage = () => {
         
       </div>
       <div className="grow p-4 gap-4 lg:pl-69 ">
+<<<<<<< HEAD
         
+=======
+        {/* <h2 className="text-xl font-medium lg:font-light lg:text-2xl text-center uppercase  mb-3 lg:mb-0 lg:mt-3 ">
+        All Collection
+        </h2> */}
+
+>>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
         {/*sort options*/}
         <SortOptions />
 

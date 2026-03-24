@@ -5,7 +5,11 @@ import {
   removeFromCart,
   updateCartItemQuantity,
 } from "../../Redux/slices/cartSlice";
+<<<<<<< HEAD
 import {ColorName} from "../../utilities/NameFromHax"
+=======
+
+>>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
 const CartContents = ({ cart, userId, guestId }) => {
   const dispatch = useDispatch();
 
@@ -29,8 +33,11 @@ const CartContents = ({ cart, userId, guestId }) => {
   const handleRemoveFromCart = (productId, size, color) => {
     dispatch(removeFromCart({ productId, guestId, userId, size, color }));
   };
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
   return (
     <div>
       {cart.products.map((product, index) => (
@@ -48,8 +55,12 @@ const CartContents = ({ cart, userId, guestId }) => {
             <div>
               <h3>{product.name}</h3>
               <p className="text-sm text-gray-500">
+<<<<<<< HEAD
                 {/* {console.log(50, ColorName("#000000"), ColorName(product.color),product.color)} */}
                 size: {product.size} | color: {ColorName(product.color)}
+=======
+                size: {product.size} | color: {product.color}
+>>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
               </p>
               <div className="flex items-center mt-2">
                 <button
@@ -85,7 +96,11 @@ const CartContents = ({ cart, userId, guestId }) => {
             </div>
           </div>
           <div>
+<<<<<<< HEAD
             <p>₹{product.price.toLocaleString()}</p>
+=======
+            <p>${product.price.toLocaleString()}</p>
+>>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
             <button
               onClick={() =>
                 handleRemoveFromCart(

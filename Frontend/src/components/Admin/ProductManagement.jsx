@@ -46,7 +46,11 @@ useEffect(() => {
                   <td className="p-4 font-medium text-gray-900 whitespace-nowrap">
                     {product.name}
                   </td>
+<<<<<<< HEAD
                   <td className="p-4">₹{product.price}</td>
+=======
+                  <td className="p-4">${product.price}</td>
+>>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
                   <td className="p-4">{product.sku}</td>
                   <td className="p-4 ">
                     <Link

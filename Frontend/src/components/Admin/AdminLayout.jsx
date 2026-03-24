@@ -25,6 +25,15 @@ const AdminLayout = () => {
        {isSideBarOpen && (
         <div className="fixed inset-0 z-10 bg-black/50 md:hidden" onClick={toggleSidebar}></div>
        )}
+<<<<<<< HEAD
+=======
+    
+      {/* {!isSideBarOpen && (
+        <div className="fixed inset-0 z-10 bg-black bg-opacity-50 md:hidden"
+        onClick={toggleSidebar}
+        > </div>
+      )} */}
+>>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
 
       {/* sidebar */}
       <div className={`bg-gray-900 w-64 min-h-screen text-white absolute md:relative transform 

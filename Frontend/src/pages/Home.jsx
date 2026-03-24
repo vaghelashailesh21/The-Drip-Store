@@ -106,7 +106,11 @@ const Home = () => {
       )}
 
       {/* ================= WOMEN TOP WEAR ================= */}
+<<<<<<< HEAD
       <div className="container mx-auto p-10">
+=======
+      <div className="container mx-auto p-4">
+>>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
         <h2 className="text-xl md: text-2xl lg:text-3xl text-center font-bold mt-2 mb-6">
           Top Wear for Womens
         </h2>

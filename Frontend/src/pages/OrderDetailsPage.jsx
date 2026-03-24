@@ -74,6 +74,7 @@ const OrderDetailsPage = () => {
               <h4 className="text-sm md:text-xl lg:text-xl font-semibold">
                 Shipping Info
               </h4>
+<<<<<<< HEAD
               
               {/* <p className=" text-xs md:text-sm lg:text-sm">
                 Shipping Method: {orderDetails.shippingMethod}
@@ -81,6 +82,14 @@ const OrderDetailsPage = () => {
               <p className=" text-xs md:text-sm lg:text-sm">
                 Address:{" "}
                 {` ${orderDetails.shippingAddress.address}, ${orderDetails.shippingAddress.city}, ${orderDetails.shippingAddress.state},  ${orderDetails.shippingAddress.pincode}`}
+=======
+              <p className=" text-xs md:text-sm lg:text-sm">
+                Shipping Method: {orderDetails.shippingMethod}
+              </p>
+              <p className=" text-xs md:text-sm lg:text-sm">
+                Address:{" "}
+                {`${orderDetails.shippingAddress.city}, ${orderDetails.shippingAddress.state}`}
+>>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
               </p>
             </div>
           </div>
@@ -114,15 +123,24 @@ const OrderDetailsPage = () => {
                       <img
                         src={item.image}
                         alt={item.name}
+<<<<<<< HEAD
                         className="h-14 w-12 object-cover rounded-lg mr-3"
                       />
                       <Link
                         to={`/product/${item.productId}`}
                         className="text-blue-500 hover:underline text-xs md:text-sm lg:text-sm whitespace-nowrap pl-0 pr-6 md:pl-10 lg:pl-15 lg:pr-6  "
+=======
+                        className="h-14 w-12 object-cover rounded-lg mr-4"
+                      />
+                      <Link
+                        to={`/product/${item.productId}`}
+                        className="text-blue-500 hover:underline text-xs md:text-sm lg:text-sm whitespace-nowrap pr-6 md:pl-10 lg:pl-20"
+>>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
                       >
                         {item.name}
                       </Link>
                     </td>
+<<<<<<< HEAD
                     <td className="py-2 px-4 text-xs md:text-sm lg:text-sm whitespace-nowrap pl-4 pr-6 md:pl-10 lg:pl-20">
                       ₹{item.price}
                     </td>
@@ -131,6 +149,16 @@ const OrderDetailsPage = () => {
                     </td>
                     <td className="py-2 px-4 text-xs md:text-sm lg:text-sm whitespace-nowrap pl-4 md:pl-10 lg:pl-20">
                       ₹{item.price * item.quantity}
+=======
+                    <td className="py-2 px-4 text-xs md:text-sm lg:text-sm whitespace-nowrap pr-6 md:pl-10 lg:pl-20">
+                      ${item.price}
+                    </td>
+                    <td className="py-2 px-4 text-xs md:text-sm lg:text-sm whitespace-nowrap pr-6 md:pl-10 lg:pl-20">
+                      {item.quantity}
+                    </td>
+                    <td className="py-2 px-4 text-xs md:text-sm lg:text-sm whitespace-nowrap pr-6 md:pl-10 lg:pl-20">
+                      ${item.price * item.quantity}
+>>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
                     </td>
                   </tr>
                 ))}
@@ -139,10 +167,14 @@ const OrderDetailsPage = () => {
           </div>
 
           {/* Back to orders link */}
+<<<<<<< HEAD
           <Link
             to="/my-orders"
             className="text-blue-500 text-xs md:text-sm lg:text-sm  hover:underline"
           >
+=======
+          <Link to="/my-orders" className="text-blue-500 text-xs md:text-sm lg:text-sm  hover:underline">
+>>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
             Back To My Orders
           </Link>
         </div>

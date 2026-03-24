@@ -5,7 +5,10 @@ logs
 # Node Modules
 frontend/node_modules/
 backend/node_modules/
+<<<<<<< HEAD
 node_modules/
+=======
+>>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
 
 # Environment variables
 frontend/.env

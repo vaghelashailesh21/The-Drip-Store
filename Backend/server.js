@@ -36,7 +36,10 @@ app.use("/api/checkout", checkoutRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/", subscribeRoutes);
+<<<<<<< HEAD
 app.use("/api/payment", require("./routes/paymentRoutes"));
+=======
+>>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
 
 // Admin Routes
 app.use("/api/admin/users", adminRoutes);

@@ -21,7 +21,10 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.2.2",
     "multer": "^2.1.1",
+<<<<<<< HEAD
     "razorpay": "^2.9.6",
+=======
+>>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
     "streamifier": "^0.1.1"
   },
   "devDependencies": {

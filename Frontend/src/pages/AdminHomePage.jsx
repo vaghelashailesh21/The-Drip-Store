@@ -47,7 +47,11 @@ useEffect(() => {
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
         <div className='p-4 shadow-md rounded-lg'>
           <h2 className='text-xl font-semibold'>Revenue</h2>
+<<<<<<< HEAD
           <p className='text-2xl'>₹{totalSales.toFixed(2)}</p>
+=======
+          <p className='text-2xl'>${totalSales.toFixed(2)}</p>
+>>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
         </div>
 
         <div className='p-4 shadow-md rounded-lg'>
@@ -85,7 +89,11 @@ useEffect(() => {
                                 <tr key={order._id} className='border-b hover:bg-gray-50 cursor-pointer'>
                                     <td className='p-4'>{order._id}</td>
                                     <td className='p-4'>{order.user?.name}</td>
+<<<<<<< HEAD
                                     <td className='p-4'>₹{order.totalPrice.toFixed(2)}</td>
+=======
+                                    <td className='p-4'>${order.totalPrice.toFixed(2)}</td>
+>>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
                                     <td className='p-4'>{order.status}</td>
                                 </tr>
                             ))
