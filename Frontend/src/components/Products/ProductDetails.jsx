@@ -150,11 +150,7 @@ const ProductDetails = ({ productId }) => {
               {selectedProduct.name}
             </h1>
             <span className="text-md md:text-lg lg:text-lg font-bold text-gray-800 pr-2">
-<<<<<<< HEAD
               ₹{selectedProduct.price &&
-=======
-              ${selectedProduct.price &&
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
                 `${selectedProduct.price}`}
             </span>
             <p className="text-gray-700 text-xs md:text-sm lg:text-lg mt-2 mb-4 ">

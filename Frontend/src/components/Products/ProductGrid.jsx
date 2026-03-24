@@ -19,11 +19,7 @@ const ProductGrid = ({products, loading, error}) => {
                         </div>
                         <h2 className='text-sm mb-2'>{product.name}</h2>
                         <p className='text-gray-500 font-medium text-sm tracking-tighter'>
-<<<<<<< HEAD
                           ₹{product.price}
-=======
-                          ${product.price}
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
                         </p>
                     </div>
                 </Link>

@@ -26,10 +26,7 @@ const Navbar = () => {
 
   const toggleCartDrawer = () => {
     setDrawerOpen(!drawerOpen);
-<<<<<<< HEAD
     
-=======
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
   };
 
   return (

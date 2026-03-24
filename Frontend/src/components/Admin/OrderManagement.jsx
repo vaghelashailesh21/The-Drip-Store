@@ -51,11 +51,7 @@ const OrderManagement = () => {
                     #{order._id}
                   </td>
                   <td className="p-4">{order.user?.name}</td>
-<<<<<<< HEAD
                   <td className="p-4">₹{order.totalPrice?.toFixed(2)}</td>
-=======
-                  <td className="p-4">${order.totalPrice?.toFixed(2)}</td>
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
                   <td className="p-4">
                     <select
                       value={order.status}

@@ -1,27 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
 import { useDispatch, useSelector } from "react-redux";
 import { createCheckout } from "../../Redux/slices/checkoutSlice";
 import RazorpayButton from "./RazorpayButton";
 import {ColorName} from "../../utilities/NameFromHax"
-=======
-import PayPalButton from "./PayPalButton";
-import { useDispatch, useSelector } from "react-redux";
-import { createCheckout } from "../../Redux/slices/checkoutSlice";
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
 import axios from "axios";
 
 const CheckOut = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-<<<<<<< HEAD
   const { cart, loading, error } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
-=======
-  const {cart, loading, error} = useSelector((state) => state.cart);
-  const {user} = useSelector((state) => state.auth);
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
 
   const [checkoutid, setCheckoutid] = useState(null);
   const [shippingAddress, setShippingAddress] = useState({
@@ -36,39 +25,23 @@ const CheckOut = () => {
 
   //Ensure cart is loaded before proceeding
   useEffect(() => {
-<<<<<<< HEAD
     if (!cart || !cart.products || cart.products.length === 0) {
-=======
-    if(!cart || !cart.products || cart.products.length === 0){
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
       navigate("/");
     }
   }, [cart, navigate]);
 
   const handleCreateCheckOut = async (e) => {
     e.preventDefault();
-<<<<<<< HEAD
     if (cart && cart.products.length > 0) {
-=======
-    if(cart && cart.products.length > 0){
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
       const res = await dispatch(
         createCheckout({
           checkoutItems: cart.products,
           shippingAddress,
-<<<<<<< HEAD
           paymentMethod: "Razorpay",
           totalPrice: Number(cart.totalPrice),
         }),
       );
       if (res.payload && res.payload._id) {
-=======
-          paymentMethod: "Paypal",
-          totalPrice: cart.totalPrice,
-        })
-      );
-      if(res.payload && res.payload._id) {
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
         setCheckoutid(res.payload._id); // set checkout id if checkout was successful
       }
     }
@@ -78,20 +51,12 @@ const CheckOut = () => {
     try {
       const response = await axios.put(
         `${import.meta.env.VITE_BACKEND_URL}/api/checkout/${checkoutid}/pay`,
-<<<<<<< HEAD
         { paymentStatus: "paid", paymentDetails: details },
-=======
-        {paymentStatus: "paid", paymentDetails: details},
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("userToken")}`,
           },
-<<<<<<< HEAD
         },
-=======
-        }
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
       );
       await handleFinalizeCheckout(checkoutid); // Finalize checkout if payment is successful
     } catch (error) {
@@ -99,7 +64,6 @@ const CheckOut = () => {
     }
   };
 
-<<<<<<< HEAD
   const handleFinalizeCheckout = async (checkoutid) => {
     try {
       const response = await axios.post(
@@ -167,30 +131,6 @@ const CheckOut = () => {
   if (!cart || !cart.products || cart.products.length === 0) {
     return <p>Your cart is empty</p>;
   }
-=======
-const handleFinalizeCheckout = async (checkoutid) => {
-  try {
-    const response = await axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}/api/checkout/${checkoutid}/finalize`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        },
-      }
-    );
-   navigate("/order-confirmation");
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-if (loading) return <p>Loading cart...</p>;
-if(error) return <p>Error: {error}</p>
-if(!cart || !cart.products || cart.products.length === 0) {
-  return <p>Your cart is empty</p>;
-}
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto py-10 px-6 tracking-tighter">
@@ -203,11 +143,7 @@ if(!cart || !cart.products || cart.products.length === 0) {
             <label className="text-gray-700 block">Email</label>
             <input
               type="email"
-<<<<<<< HEAD
               value={user ? user.email : ""}
-=======
-              value={user? user.email : ""}
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
               className="w-full p-2 border rounded"
               disabled
             />
@@ -340,20 +276,12 @@ if(!cart || !cart.products || cart.products.length === 0) {
               </button>
             ) : (
               <div>
-<<<<<<< HEAD
                 <h3 className="text-lg mb-4">Pay with Razorpay</h3>
                 <RazorpayButton
                   amount={Number(cart.totalPrice)}
                   onSuccess={handlePaymentSuccess}
                   user={user}
                   shippingAddress={shippingAddress}
-=======
-                <h3 className="text-lg mb-4">Pay with PayPal</h3>
-                <PayPalButton
-                  amount={cart.totalPrice}
-                  onSuccess={handlePaymentSuccess}
-                  onError={(err) => alert("Payment failed, Try Again.")}
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
                 />
               </div>
             )}
@@ -379,27 +307,16 @@ if(!cart || !cart.products || cart.products.length === 0) {
                 <div>
                   <h3 className="text-md">{product.name}</h3>
                   <p className="text-gray-500">Size: {product.size}</p>
-<<<<<<< HEAD
                   <p className="text-gray-500">Color: {ColorName(product.color)}</p>
                 </div>
               </div>
               <p className="text-xl">₹{product.price?.toLocaleString()}</p>
-=======
-                  <p className="text-gray-500">Color: {product.color}</p>
-                </div>
-              </div>
-              <p className="text-xl">${product.price?.toLocaleString()}</p>
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
             </div>
           ))}
         </div>
         <div className="flex items-center justify-between text-lg mb-4">
           <p>Subtotal</p>
-<<<<<<< HEAD
           <p>₹{cart.totalPrice?.toLocaleString()}</p>
-=======
-          <p>${cart.totalPrice?.toLocaleString()}</p>
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
         </div>
         <div className="flex items-center justify-between text-lg ">
           <p>Shipping</p>
@@ -407,11 +324,7 @@ if(!cart || !cart.products || cart.products.length === 0) {
         </div>
         <div className="flex items-center justify-between text-lg mt-4 border-t pt-4">
           <p>Total Amount</p>
-<<<<<<< HEAD
           <p>₹{cart.totalPrice?.toLocaleString()}</p>
-=======
-          <p>${cart.totalPrice?.toLocaleString()}</p>
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
         </div>
       </div>
     </div>

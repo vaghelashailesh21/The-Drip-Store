@@ -17,11 +17,7 @@ const Hero = () => {
             Fashion House
           </h1>
           <p className="text-sm tracking-tighter md:text-lg  mb-6">
-<<<<<<< HEAD
             Explore our trendy street-style outfits with fast shipping all over india
-=======
-            Explore our trendy street-style outfits with fast worldwide shipping
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
           </p>
           <Link to="/collections/all"  className="bg-white text-gray-950 px-3 py-2  rounded-sm text-xs lg:text-lg md:text-lg" >Shop Now</Link>
         </div>

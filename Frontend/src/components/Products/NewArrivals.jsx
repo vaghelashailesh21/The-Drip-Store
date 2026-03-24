@@ -65,11 +65,7 @@ const NewArrivals = () => {
               <div className="absolute bottom-0 left-0 right-0  p-1 md:p-4 bg-black/50 backdrop-blur-md text-white  rounded-b-lg ">
                 <Link to={`/product/${product._id}`} className="block">
                   <h4 className="font-medium  text-xs lg:text-xl md:text-xs justify-center" >{product.name}</h4>
-<<<<<<< HEAD
                   <p className=" text-xs lg:text-xl md:text-xs mt-1 ">₹{product.price}</p>
-=======
-                  <p className=" text-xs lg:text-xl md:text-xs mt-1 ">${product.price}</p>
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
                 </Link>
               </div>
             </div>

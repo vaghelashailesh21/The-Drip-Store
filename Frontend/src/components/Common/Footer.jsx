@@ -56,21 +56,13 @@ const Footer = () => {
           {/* Follow Us */}
           <div>
             <h3 className="text-lg  mb-4">Follow Us</h3>
-<<<<<<< HEAD
             <div className="flex items-center text-gray-600 hover:text-black gap-4 mb-4">
-=======
-            <div className="flex items-center text-gray-600 gap-4 mb-4">
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
               <a
                 href="https://www.facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-<<<<<<< HEAD
                 <TbBrandMeta className="h-5 w-5 text-gray-600 hover:text-black cursor-pointer" />
-=======
-                <TbBrandMeta className="h-5 w-5 hover:text-gray-300 cursor-pointer" />
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
               </a>
 
               <a
@@ -78,11 +70,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-<<<<<<< HEAD
                 <IoLogoInstagram className="h-5 w-5 text-gray-600 hover:text-black cursor-pointer" />
-=======
-                <IoLogoInstagram className="h-5 w-5 hover:text-gray-300 cursor-pointer" />
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
               </a>
 
               <a
@@ -90,11 +78,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-<<<<<<< HEAD
                 <RiTwitterXFill className="h-4 w-4 hover:text-gray-600 cursor-pointer" />
-=======
-                <RiTwitterXFill className="h-4 w-4 hover:text-gray-300 cursor-pointer" />
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
               </a>
             </div>
             <p className="text-gray-800 mb-1">Call Us</p>
@@ -138,14 +122,7 @@ const Footer = () => {
               Be the first to hear about new products, exclusive events, and
               online offers.
             </p>
-<<<<<<< HEAD
             
-=======
-            <p className="mb-6 text-sm text-gray-600">
-              Sign up & get 10% off on your first order.
-            </p>
-
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
             <form className="flex">
               <input
                 type="email"

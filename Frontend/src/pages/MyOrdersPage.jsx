@@ -60,22 +60,14 @@ const MyOrdersPage = () => {
                   </td>
                   <td className="py-2 px-4 text-xs md:text-sm lg:text-sm  pr-6 md:pl-2 lg:pl-5">
                     {orders.shippingAddress
-<<<<<<< HEAD
                       ? `${orders.shippingAddress.address}, ${orders.shippingAddress.city}, ${orders.shippingAddress.state}, ${orders.shippingAddress.pincode}`
-=======
-                      ? `${orders.shippingAddress.city}, ${orders.shippingAddress.state}, ${orders.shippingAddress.pincode}`
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
                       : "N/A"}
                   </td>
                   <td className="py-2 px-4 text-xs md:text-sm lg:text-sm whitespace-nowrap pr-6 md:pl-5 lg:pl-5 ">
                     {orders.orderItems?.length || 0}
                   </td>
                   <td className="py-2 px-4 text-xs md:text-sm lg:text-sm whitespace-nowrap pr-6 md:pl-2 lg:pl-5">
-<<<<<<< HEAD
                     ₹{orders.totalPrice}
-=======
-                    ${orders.totalPrice}
->>>>>>> 4a206cfc9149b72045b426e759751845d0bf9973
                   </td>
                   <td className="py-2 px-4 text-xs md:text-sm lg:text-sm whitespace-nowrap pr-6 md:pl-2 lg:pl-5">
                     <span
