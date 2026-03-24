@@ -13,16 +13,22 @@ const adminRoutes = require("./routes/adminRoutes");
 const productAdminRoutes = require("./routes/productAdminRoutes");
 const adminOrderRoutes = require("./routes/adminOrderRoutes");
 
-const app = express();
-app.use(express.json());
-app.use(cors());
-
 dotenv.config();
-
-const PORT = process.env.PORT || 3000;
-
 //connect to mongoDB
 connectDB()
+
+const app = express();
+app.use(express.json());
+
+// ✅ FIX CORS properly
+app.use(cors({
+  origin: [
+    "https://the-drip-store-x2h2.vercel.app"
+  ],
+  credentials: true
+}));
+
+const PORT = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
     res.send("WELCOME TO THE DRIP STORE API!")
@@ -43,6 +49,6 @@ app.use("/api/admin/users", adminRoutes);
 app.use("/api/admin/products", productAdminRoutes);
 app.use("/api/admin/orders", adminOrderRoutes);
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-})
+module.exports = app;
+
+
