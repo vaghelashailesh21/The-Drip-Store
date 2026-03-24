@@ -36,7 +36,7 @@ const Topbar = () => {
           </div>
 
           {/* Center */}
-          <div className="text-sm text-center flex-1 whitespace-nowrap">
+          <div className="text-sm md:text-xs md:pl-10 text-center flex-1 whitespace-nowrap lg:text-sm lg:pl-10 ">
             We Ship All Over India - Fast & Reliable Shipping!
           </div>
 
