@@ -10,7 +10,7 @@
     },
     {
       "src": "/.*",
-      "dest": "/Frontend/index.html"
+     "dest": "/dist/index.html"
     }
   ]
 }
