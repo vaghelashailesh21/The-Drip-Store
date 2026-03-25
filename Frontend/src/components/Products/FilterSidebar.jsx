@@ -107,26 +107,6 @@ const FilterSidebar = () => {
     updateURlParams(newFilters);
   };
 
-  const handleGenderClick = (gender) => {
-    const newFilters = {
-      ...filters,
-      gender: filters.gender === gender ? "" : gender,
-    };
-
-    setFilters(newFilters);
-    updateURlParams(newFilters);
-  };
-
-  const handleCategoryClick = (category) => {
-  const newFilters = {
-    ...filters,
-    category: filters.category === category ? "" : category,
-  };
-
-  setFilters(newFilters);
-  updateURlParams(newFilters);
-};
-
   return (
     <div className="p-4">
       <h3 className="text-xl font-medium text-gray-800 mb-3">Filter</h3>
@@ -142,18 +122,19 @@ const FilterSidebar = () => {
               name="gender"
               value={gender}
               checked={filters.gender === gender}
-              onChange={handleFilterChange}
+              onClick={handleFilterChange}
+              onChange={() => {}}
               className="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-400 border-gray-300"
             />
-            <span onClick={() => handleGenderClick(gender)} className="text-gray-700">{gender}</span>
+            <span className="text-gray-700">{gender}</span>
           </label>
         ))}
       </div>
 
-      {/* catogory filter */}
+      {/* category filter */}
 
       <div className="mb-4">
-        <label className="block text-gray-600 font-medium mb-2">Catogory</label>
+        <label className="block text-gray-600 font-medium mb-2">Category</label>
         {categoris.map((category) => (
             <label key={category} className="flex items-center mb-1 cursor-pointer">
             <input
@@ -161,10 +142,11 @@ const FilterSidebar = () => {
               name="category"
               value={category}
               checked={filters.category === category}
-              onChange={handleFilterChange}
+              onClick={handleFilterChange}
+              onChange={() => {}}
               className="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-400 border-gray-300"
             />
-            <span onClick={() => handleCategoryClick(category)} className="text-gray-700">{category}</span>
+            <span className="text-gray-700">{category}</span>
           </label>
         ))}
       </div>

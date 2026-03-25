@@ -1,30 +1,30 @@
-import React, {  useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaFilter } from "react-icons/fa";
 import FilterSidebar from "../components/Products/FilterSidebar";
 import SortOptions from "../components/Products/SortOptions";
 import ProductGrid from "../components/Products/ProductGrid";
 import { useLocation, useParams, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProductsByFilters } from '../Redux/slices/productsSlice';
+import { fetchProductsByFilters } from "../Redux/slices/productsSlice";
 
 const CollectionPage = () => {
-  const {collection} = useParams();
+  const { collection } = useParams();
   const [searchParams] = useSearchParams();
   const location = useLocation();
 
   const dispatch = useDispatch();
   const { products, loading, error } = useSelector((state) => state.products);
   const queryParams = Object.fromEntries([...searchParams]);
-  
+
   const sidebarRef = useRef(null);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
   // Fetch products when filters/collection change
   useEffect(() => {
-      dispatch(fetchProductsByFilters({ collection, ...queryParams }));
+    dispatch(fetchProductsByFilters({ collection, ...queryParams }));
   }, [dispatch, collection, searchParams]);
 
- // Scroll to top when route OR filters change
+  // Scroll to top when route OR filters change
   useEffect(() => {
     const container = document.getElementById("main-scroll");
 
@@ -67,6 +67,14 @@ const CollectionPage = () => {
         <FaFilter className="mr-1" /> Filter
       </button>
 
+      {isSideBarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 lg:hidden"
+          style={{ zIndex: 48 }}
+          onClick={toggleSidebar}
+        />
+      )}
+
       {/* Filter Sidebar */}
       <div
         ref={sidebarRef}
@@ -78,10 +86,8 @@ const CollectionPage = () => {
         }}
       >
         <FilterSidebar />
-        
       </div>
       <div className="grow p-4 gap-4 lg:pl-69 ">
-        
         {/*sort options*/}
         <SortOptions />
 

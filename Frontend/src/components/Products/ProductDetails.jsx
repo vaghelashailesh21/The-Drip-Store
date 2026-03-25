@@ -248,10 +248,10 @@ const ProductDetails = ({ productId }) => {
                     <td className="py-1">Gender</td>
                     <td className="py-1">{selectedProduct.gender}</td>
                   </tr>
-                  <tr>
+                  {/* <tr>
                     <td className="py-1">Rating</td>
                     <td className="py-1">{selectedProduct.rating} ({selectedProduct.numReviews} reviews)</td>
-                  </tr>
+                  </tr> */}
                   <tr>
                     <td className="py-1">SKU</td>
                     <td className="py-1">{selectedProduct.sku}</td>
