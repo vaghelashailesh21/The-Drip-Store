@@ -25,7 +25,7 @@ const OrderDetailsPage = () => {
       {!orderDetails ? (
         <p>No Orders Details Found</p>
       ) : (
-        <div className="p-4 sm:p-6 rounded-lg border">
+        <div className="p-4 sm:p-6 bg-white shadow-md rounded-xl ">
           <div className="flex flex-col sm:flex-row justify-between mb-8">
             <div>
               <h3 className="text-sm md:text-xl lg:text-xl font-semibold">

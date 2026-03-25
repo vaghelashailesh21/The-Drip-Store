@@ -33,7 +33,7 @@ const OrderConfirmationPage = () => {
       </h1>
 
       {checkout && (
-        <div className="p-4 sm:p-6 rounded-lg border">
+        <div className="p-4 sm:p-6 bg-white shadow-md rounded-xl">
           <div className=" flex flex-col sm:flex-row justify-between mb-8">
             {/* order id and date  */}
             <div>
