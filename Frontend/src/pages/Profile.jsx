@@ -23,29 +23,36 @@ const Profile = () => {
     navigate("/login");
   }  
 
-  return (
-    <div className="min-h-screen flex flex-col">
-      <div className="flex-grow container mx-auto p-4 md:p-6 lg:p-6">
-        <div className="flex flex-col md:flex-row md:space-x-6 md:space-y-0 lg:space-y-6 space-y-6 ">
-          {/* left section */}
-          <div className="w-full md:w-1/3 lg:w-1/4 shadow-md rounded-lg  p-6  lg:ml-12 md:ml-3 ">
-            <h1 className="text-xl md:text-2xl lg:text-2xl  font-bold mb-4 ">
-             {user?.name}
-            </h1>
-            <p className="text-sm md:text-lg lg:text-lg text-gray-600 mb-4">{user?.email}</p>
-            <button onClick={handleLogout} className="w-full bg-red-500 text-white py-2 px-4 hover:bg-red-600 rounded-lg">
-              Log out
-            </button>
-          </div>
+return (
+  <div className="min-h-screen  py-6">
+    <div className="max-w-7xl mx-auto px-4">
+      
+      <div className="flex flex-col md:flex-row gap-6">
+        
+        {/* LEFT SIDEBAR */}
+        <div className="w-full md:w-1/3 lg:w-1/4 bg-white shadow-md rounded-xl p-6">
+          <h1 className="text-xl md:text-2xl font-bold mb-2">
+            {user.name}
+          </h1>
+          <p className="text-gray-600 mb-6">{user.email}</p>
 
-          {/* Right Section  order table*/}
-          <div className="w-full md:w-2/3 lg:3/4 ">
-            <MyOrdersPage />
-          </div>
+          <button
+            onClick={handleLogout}
+            className="w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition"
+          >
+            Log out
+          </button>
         </div>
-      </div>
-    </div>
-  );
-};
 
+        {/* RIGHT CONTENT */}
+        <div className="w-full md:w-2/3 lg:w-3/4 bg-white shadow-md rounded-xl p-2">
+          <MyOrdersPage />
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+);
+}
 export default Profile;
