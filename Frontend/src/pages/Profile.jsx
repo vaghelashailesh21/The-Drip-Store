@@ -25,10 +25,10 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="flex-grow container mx-auto p-4 md:p-6">
-        <div className="flex flex-col md:flex-row md:space-x-6 md:space-y-0 space-y-6 ">
+      <div className="flex-grow container mx-auto p-4 md:p-6 lg:p-6">
+        <div className="flex flex-col md:flex-row md:space-x-6 md:space-y-6 lg:space-y-6 space-y-6 ">
           {/* left section */}
-          <div className="w-full md:w-1/3 lg:w-1/4 shadow-md rounded-lg  p-6 ml-15 ">
+          <div className="w-full md:w-1/3 lg:w-1/4 shadow-md rounded-lg  p-6  lg:ml-10 md:ml-3 ">
             <h1 className="text-xl md:text-2xl lg:text-2xl  font-bold mb-4 ">
              {user?.name}
             </h1>
