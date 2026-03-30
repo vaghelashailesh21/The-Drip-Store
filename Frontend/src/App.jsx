@@ -22,6 +22,10 @@ import ScrollToTop from "./components/Common/ScrollToTop";
 import { Provider } from "react-redux";
 import store from "./Redux/store";
 import ProtectedRoute from "./components/Common/ProtectedRoute";
+import AboutUs from "./pages/AboutUs";
+import FAQ from "./pages/FAQ";
+import ContactUs from "./pages/ContactUs";
+import Features from "./pages/Features";
 
 const App = () => {
   return (
@@ -40,6 +44,10 @@ const App = () => {
               path="collections/:collection"
               element={<CollectionPage />}
             />
+            <Route path="AboutUS" element={<AboutUs />} />
+            <Route path="FAQ" element={<FAQ />} />
+            <Route path="ContactUS" element={<ContactUs />} />
+            <Route path="Features" element={<Features />} />
             <Route path="product/:id" element={<ProductDetails />} />
             <Route path="checkout" element={<CheckOut />} />
             <Route
