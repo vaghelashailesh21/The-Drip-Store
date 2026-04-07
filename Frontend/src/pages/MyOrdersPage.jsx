@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchUserOrders } from "../Redux/slices/orderSlice";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const MyOrdersPage = () => {
   const navigate = useNavigate()
@@ -17,8 +19,108 @@ const MyOrdersPage = () => {
     navigate(`/order/${orderId}`)
   }
 
- if(loading) return <p className="text-gray-600 items-center">Loading ...</p>
- if(error) return <p>Error: {error}</p>
+
+// Loading UI
+if (loading) {
+  return (
+    <div className="max-w-8xl mx-auto p-2 md:p-6 lg:p-4">
+      <h2 className="text-xl sm:text-2xl font-bold mb-6">My Orders</h2>
+
+      <div className="relative shadow-md sm:rounded-lg overflow-x-scroll no-scrollbar">
+        <table className="min-w-full text-left text-gray-500">
+          
+          {/* Header */}
+          <thead className="bg-gray-100 text-xs uppercase text-gray-700">
+            <tr>
+              <th className="py-2 px-4">Image</th>
+              <th className="py-2 px-4">Order ID</th>
+              <th className="py-2 px-4">Created</th>
+              <th className="py-2 px-4">Shipping</th>
+              <th className="py-2 px-4">Items</th>
+              <th className="py-2 px-4">Price</th>
+              <th className="py-2 px-4">Status</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {Array(5).fill(0).map((_, i) => (
+              <tr key={i} className="border-b border-gray-50">
+                
+                {/* Image */}
+                <td className="py-2 px-4">
+                  <Skeleton width={50} height={60} />
+                </td>
+
+                {/* Order ID */}
+                <td className="py-2 px-4">
+                  <Skeleton width={100} />
+                </td>
+
+                {/* Date */}
+                <td className="py-2 px-4">
+                  <Skeleton width={120} />
+                </td>
+
+                {/* Address */}
+                <td className="py-2 px-4">
+                  <Skeleton width={180} />
+                </td>
+
+                {/* Items */}
+                <td className="py-2 px-4">
+                  <Skeleton width={30} />
+                </td>
+
+                {/* Price */}
+                <td className="py-2 px-4">
+                  <Skeleton width={60} />
+                </td>
+
+                {/* Status */}
+                <td className="py-2 px-4">
+                  <Skeleton width={70} height={20} />
+                </td>
+
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+// Error UI
+if (error) {
+  return (
+    <div className="max-w-4xl mx-auto p-6">
+      <div className="flex flex-col items-center justify-center py-16 text-center">
+        
+        {/* Icon */}
+        <div className="text-5xl mb-4">📦</div>
+
+        {/* Title */}
+        <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-2">
+          Unable to load your orders
+        </h2>
+
+        {/* Message */}
+        <p className="text-gray-500 max-w-md mb-6">
+          Something went wrong while fetching your orders. Please try again.
+        </p>
+
+        {/* Button */}
+        <button
+          onClick={() => window.location.reload()}
+          className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition"
+        >
+          Retry
+        </button>
+
+      </div>
+    </div>
+  );
+}
 
   return (
     <div className="max-w-8xl mx-auto p-2 md:p-6 lg:p-4 ">

@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductDetails, fetchSimilarProducts } from "../../Redux/slices/productsSlice";
 import { addToCart } from "../../Redux/slices/cartSlice";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 
 
@@ -86,13 +88,133 @@ const ProductDetails = ({ productId }) => {
     }); 
   };  
 
-  if(loading) {
-    return <p className="text-center text-gray-500">Loading product details...</p>;
-  }
+// Loading UI  
+if (loading) {
+  return (
+    <div className="max-w-6xl mx-auto bg-white p-8 rounded-lg">
+      <div className="flex flex-col md:flex-row">
+        
+        {/* LEFT THUMBNAILS */}
+        <div className="hidden md:flex flex-col space-y-4 mr-6">
+          {Array(4).fill(0).map((_, i) => (
+            <Skeleton
+              key={i}
+              className="w-20 h-20 rounded-lg"
+              baseColor="#e5e7eb"
+              highlightColor="#f3f4f6"
+            />
+          ))}
+        </div>
 
-  if(error) {
-    return <p className="text-center text-red-500">Error loading product details: {error}</p>;
-  }
+        {/* MAIN IMAGE */}
+        <div className="md:w-1/2">
+          <Skeleton
+            className="w-full h-[400px] sm:h-[500px] md:h-[420px] lg:h-[520px] rounded-lg"
+            baseColor="#e5e7eb"
+            highlightColor="#f3f4f6"
+          />
+        </div>
+
+        {/* RIGHT SIDE CONTENT */}
+        <div className="md:w-1/2 md:ml-10 mt-6 md:mt-0 space-y-4">
+          
+          {/* Title */}
+          <Skeleton width="70%" height={25} />
+
+          {/* Price */}
+          <Skeleton width="30%" height={20} />
+
+          {/* Description */}
+          <Skeleton width="90%" />
+          <Skeleton width="80%" />
+          <Skeleton width="60%" />
+
+          {/* Color */}
+          <div>
+            <Skeleton width="20%" />
+            <div className="flex gap-2 mt-2">
+              {Array(4).fill(0).map((_, i) => (
+                <Skeleton key={i} circle width={30} height={30} />
+              ))}
+            </div>
+          </div>
+
+          {/* Size */}
+          <div>
+            <Skeleton width="20%" />
+            <div className="flex gap-2 mt-2">
+              {Array(4).fill(0).map((_, i) => (
+                <Skeleton key={i} circle width={30} height={30} />
+              ))}
+            </div>
+          </div>
+
+          {/* Quantity */}
+          <div>
+            <Skeleton width="30%" />
+            <div className="flex gap-3 mt-2">
+              <Skeleton width={30} height={30} />
+              <Skeleton width={40} height={30} />
+              <Skeleton width={30} height={30} />
+            </div>
+          </div>
+
+          {/* Button */}
+          <Skeleton height={45} />
+
+          {/* Table */}
+          <div className="mt-6 space-y-2">
+            <Skeleton width="40%" />
+            {Array(5).fill(0).map((_, i) => (
+              <Skeleton key={i} height={15} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+//error UI 
+ if (error) {
+  return (
+    <div className="max-w-6xl mx-auto bg-white p-8 rounded-lg">
+      <div className="flex flex-col items-center justify-center py-16 text-center">
+        
+        {/* Icon */}
+        <div className="text-5xl mb-4">🛑</div>
+
+        {/* Title */}
+        <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-2">
+          Unable to load product
+        </h2>
+
+        {/* Message */}
+        <p className="text-gray-500 max-w-md mb-6">
+          Something went wrong while fetching this product. Please try again or explore other items.
+        </p>
+
+        {/* Buttons */}
+        <div className="flex gap-4">
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition"
+          >
+            Retry
+          </button>
+
+          <button
+            onClick={() => window.history.back()}
+            className="border border-gray-300 px-6 py-2 rounded hover:bg-gray-100 transition"
+          >
+            Go Back
+          </button>
+        </div>
+
+      </div>
+    </div>
+  );
+}
 
   return (
     <div>

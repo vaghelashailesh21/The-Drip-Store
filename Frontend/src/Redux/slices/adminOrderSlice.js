@@ -16,7 +16,9 @@ export const fetchAllOrders = createAsyncThunk(
       );
       return response.data; // Return the orders data from the response
     } catch (error) {
-      return rejectWithValue(error.response.data); // Return the error message from the response
+      return rejectWithValue(
+        error.response?.data || { message: "Server error" },
+      ); // Return the error message from the response
     }
   },
 );
@@ -37,7 +39,9 @@ export const updateOrderStatus = createAsyncThunk(
       );
       return response.data; // Return the updated order data from the response
     } catch (error) {
-      return rejectWithValue(error.response.data); // Return the error message from the response
+      return rejectWithValue(
+        error.response?.data || { message: "Failed to update order" },
+      ); // Return the error message from the response
     }
   },
 );
@@ -57,7 +61,9 @@ export const deleteOrder = createAsyncThunk(
       );
       return id; // Return the deleted order ID to update the state
     } catch (error) {
-      return rejectWithValue(error.response.data); // Return the error message from the response
+      return rejectWithValue(
+        error.response?.data || { message: "Failed to delete order" },
+      ); // Return the error message from the response
     }
   },
 );
@@ -92,7 +98,8 @@ const adminOrderSlice = createSlice({
       })
       .addCase(fetchAllOrders.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload.message;
+        state.error =
+          action.payload?.message || action.payload || "Failed to fetch orders";
       })
       // Update order status
       .addCase(updateOrderStatus.fulfilled, (state, action) => {
