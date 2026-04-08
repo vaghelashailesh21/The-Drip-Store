@@ -65,6 +65,30 @@ export const updateProduct = createAsyncThunk(
   },
 );
 
+// Async thunk to create a new product (Admin Only)
+export const createProduct = createAsyncThunk(
+  "products/createProduct",
+  async (productData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/products`,
+        productData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data || error.message
+      );
+    }
+  }
+);
+
 // Async thunk to fetch similar products
 export const fetchSimilarProducts = createAsyncThunk(
   "products/fetchSimilarProducts",
@@ -161,6 +185,20 @@ const productsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+      // Handle creating a new product (Admin Only)
+        .addCase(createProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      }
+        ).addCase(createProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products.push(action.payload);  
+      })
+        .addCase(createProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || action.error.message;
+      })
+      
         // Handle fetching similar products
         .addCase(fetchSimilarProducts.pending, (state) => {
         state.loading = true;

@@ -28,6 +28,8 @@ import ContactUs from "./pages/ContactUs";
 import Features from "./pages/Features";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import AdminOrderDetails from "./components/Admin/AdminOrderDetails";
+import CreateProductPage from "./components/Admin/CreateProductPage";
 
 const App = () => {
   return (
@@ -74,6 +76,8 @@ const App = () => {
             <Route path="products" element={<ProductManagement />} />
             <Route path="products/:id/edit" element={<EditProductPage />} />
             <Route path="orders" element={<OrderManagement />} />
+            <Route path="/admin/orders/:id" element={<AdminOrderDetails />} />
+            <Route path="/admin/products/create" element={<CreateProductPage />} />
           </Route>
         </Routes>
       </>

@@ -68,10 +68,33 @@ export const deleteOrder = createAsyncThunk(
   },
 );
 
+// Fetch single order by ID (admin)
+export const fetchOrderById = createAsyncThunk(
+  "adminOrders/fetchOrderById",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/orders/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data || { message: "Failed to fetch order" }
+      );
+    }
+  }
+);
+
 const adminOrderSlice = createSlice({
   name: "adminOrders",
   initialState: {
     orders: [],
+    selectedOrder: null,
     totalOrders: 0,
     totalSales: 0,
     loading: false,
@@ -117,6 +140,22 @@ const adminOrderSlice = createSlice({
           (order) => order._id !== action.payload,
         );
         state.totalOrders = state.orders.length; // Update total orders count
+      });
+      // Fetch single order by ID
+      builder
+      .addCase(fetchOrderById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.selectedOrder = null; // Clear previous order details
+      })
+      .addCase(fetchOrderById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedOrder = action.payload; // Store the fetched order details
+      })
+      .addCase(fetchOrderById.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.payload?.message || action.payload || "Failed to fetch order";
       });
   },
 });
