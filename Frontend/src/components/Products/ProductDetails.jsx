@@ -46,7 +46,7 @@ const ProductDetails = ({ productId }) => {
     // Nothing selected
     if (!selectedSize && !selectedColor) {
       toast.error("Please select your preferred size and color to continue.", {
-        duration: 2000,
+        duration: 1000,
       });
       return;
     }
@@ -54,7 +54,7 @@ const ProductDetails = ({ productId }) => {
     // Color selected, size missing
     if (!selectedSize && selectedColor) {
       toast.error("Please select a size to continue.", {
-        duration: 2000,
+        duration: 1000,
       });
       return;
     }
@@ -62,7 +62,7 @@ const ProductDetails = ({ productId }) => {
     // Size selected, color missing
     if (selectedSize && !selectedColor) {
       toast.error("Please select a color to continue.", {
-        duration: 2000,
+        duration: 1000,
       });
       return;
     }
@@ -79,9 +79,9 @@ const ProductDetails = ({ productId }) => {
         userId: user?._id 
       })
     ).then(() => {
-      toast.success("Product added to cart!", { duration: 2000 });
+      toast.success("Product added to cart!", { duration: 1000 });
     }).catch((error) => {
-      toast.error("Failed to add product to cart. Please try again.", { duration: 2000 });
+      toast.error("Failed to add product to cart. Please try again.", { duration: 1000 });
       console.error("Add to cart error:", error);
     }).finally(() => {
       setIsButtonDisabled(false);

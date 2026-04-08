@@ -4,6 +4,8 @@ import register from "../assets/Login.webp";
 import { registerUser } from "../Redux/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { mergeCart } from "../Redux/slices/cartSlice";
+import { toast } from "sonner";
+import { clearAuthState } from "../Redux/slices/authSlice";
 
 
 const Register = () => {
@@ -14,7 +16,7 @@ const Register = () => {
   const dispatch = useDispatch();
     const navigate = useNavigate();
   const location = useLocation();
-  const { user, guestId, loading } = useSelector((state) => state.auth);
+  const { user, guestId, loading, error, success } = useSelector((state) => state.auth);
   const { cart } = useSelector((state) => state.cart);
 
   // Get redirect parameter and check if its checkout or something
@@ -33,10 +35,33 @@ const Register = () => {
     }
   }, [user, guestId, cart, navigate, isCheckoutRedirect, dispatch])
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(registerUser({ name, email, password }));
+  useEffect(() => {
+  if (error) {
+    toast.error(error, { duration: 1000 });
+    dispatch(clearAuthState());
   }
+
+  if (success) {
+    toast.success("Account created successfully 🎉", { duration: 1000 });
+    dispatch(clearAuthState());
+  }
+}, [error, success, dispatch]);
+
+  const handleSubmit = (e) => {
+  e.preventDefault();
+
+  if (!name || !email || !password) {
+    toast.error("Please fill all fields", { duration: 1000 });
+    return;
+  }
+
+  if (password.length < 6) {
+    toast.error("Password must be at least 6 characters", { duration: 1000 });
+    return;
+  }
+
+  dispatch(registerUser({ name, email, password }));
+};
 
   return (
     <div className="flex">
@@ -86,6 +111,8 @@ const Register = () => {
             />
           </div>
           <button 
+            type="submit"
+            disabled={loading}
             className="bg-black text-white w-full p-2 rounded-lg font-semibold hover:bg-gray-800 transition " >
            {loading ? "Loading..." : "Sign up"}
           </button>

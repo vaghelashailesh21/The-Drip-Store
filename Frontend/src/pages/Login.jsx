@@ -4,6 +4,8 @@ import login from "../assets/WomenCollection.jpg";
 import { loginUser } from "../Redux/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { mergeCart } from "../Redux/slices/cartSlice";
+import { toast } from "sonner";
+import { clearAuthState } from "../Redux/slices/authSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,7 +13,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, guestId, loading } = useSelector((state) => state.auth);
+  const { user, guestId, loading, error, success } = useSelector((state) => state.auth);
   const { cart } = useSelector((state) => state.cart);
 
   // Get redirect parameter and check if its checkout or something
@@ -30,10 +32,28 @@ const Login = () => {
     }
   }, [user, guestId, cart, navigate, isCheckoutRedirect, dispatch])
 
-   const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(loginUser({ email, password }));
+  useEffect(() => {
+  if (error) {
+    toast.error(error, { duration: 1000 });
+    dispatch(clearAuthState());
   }
+
+  if (success) {
+    toast.success("Login Successful 🎉", { duration: 1000 });
+    dispatch(clearAuthState());
+  }
+}, [error, success, dispatch]);
+
+   const handleSubmit = (e) => {
+  e.preventDefault();
+
+  if (!email || !password) {
+    toast.error("Please enter email and password", { duration: 1000 });
+    return;
+  }
+
+  dispatch(loginUser({ email, password }));
+};
 
   return (
     <div className="flex">
@@ -70,8 +90,10 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full p-2 border rounded"
             />
+            
           </div>
           <button type="submit"
+            disabled={loading}
             className="bg-black text-white w-full p-2 rounded-lg font-semibold hover:bg-gray-800 transition ">
             {loading?"Loading...":"Sign in"}
           </button>

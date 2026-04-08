@@ -17,6 +17,7 @@ const initialState = {
   guestId: initialGuestId,
   loading: false,
   error: null,
+  success: false,
 };
 
 // Async thunk for User login
@@ -33,7 +34,9 @@ export const loginUser = createAsyncThunk(
 
       return response.data.user; // Return the user object from the response
     } catch (error) {
-      return rejectWithValue(error.response.data);
+     return rejectWithValue(
+  error.response?.data || { message: "Something went wrong" }
+);
     }
   },
 );
@@ -52,7 +55,9 @@ export const registerUser = createAsyncThunk(
 
       return response.data.user; // Return the user object from the response
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(
+  error.response?.data || { message: "Something went wrong" }
+);
     }
   },
 );
@@ -73,35 +78,45 @@ const authSlice = createSlice({
       state.guestId = `guest_${new Date().getTime()}`;
       localStorage.setItem("guestId", state.guestId);
     },
+    clearAuthState: (state) => {
+    state.error = null;
+    state.success = false;
+  },
   },
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.success = false;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload; 
+        state.user = action.payload;
+        state.success = true;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload.message 
+        state.error = action.payload?.message || "Invalid email or password";
+        state.success = false;
       })
       .addCase(registerUser.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.success = false;  
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload; // Set the user data from the response
+        state.success = true;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload.message 
+        state.error = action.payload?.message || "Invalid email or password"; 
+        state.success = false;
       });
   },
 });
 
-export const { logout, generateNewGuestId } = authSlice.actions;
+export const { logout, generateNewGuestId, clearAuthState  } = authSlice.actions;
 export default authSlice.reducer;
