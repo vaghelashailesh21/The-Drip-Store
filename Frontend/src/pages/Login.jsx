@@ -13,61 +13,67 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, guestId, loading, error, success } = useSelector((state) => state.auth);
+  const { user, guestId, loading, error, success } = useSelector(
+    (state) => state.auth,
+  );
   const { cart } = useSelector((state) => state.cart);
 
   // Get redirect parameter and check if its checkout or something
   const redirect = new URLSearchParams(location.search).get("redirect") || "/";
   const isCheckoutRedirect = redirect.includes("checkout");
-  
+
   useEffect(() => {
     if (user) {
-         if(cart?.products.length > 0  && guestId){
-          dispatch(mergeCart({guestId, user})).then(() => {
-            navigate(isCheckoutRedirect ?  "/checkout" : "/");
-          });
-         } else {
+      if (cart?.products.length > 0 && guestId) {
+        dispatch(mergeCart({ guestId, user })).then(() => {
           navigate(isCheckoutRedirect ? "/checkout" : "/");
-         }
+        });
+      } else {
+        navigate(isCheckoutRedirect ? "/checkout" : "/");
+      }
     }
-  }, [user, guestId, cart, navigate, isCheckoutRedirect, dispatch])
+  }, [user, guestId, cart, navigate, isCheckoutRedirect, dispatch]);
 
   useEffect(() => {
-  if (error) {
-    toast.error(error, { duration: 1000 });
-    dispatch(clearAuthState());
-  }
+    if (error) {
+      toast.error(error, { duration: 1000 });
+      dispatch(clearAuthState());
+    }
 
-  if (success) {
-    toast.success("Login Successful 🎉", { duration: 1000 });
-    dispatch(clearAuthState());
-  }
-}, [error, success, dispatch]);
+    if (success) {
+      toast.success("Login Successful 🎉", { duration: 1000 });
+      dispatch(clearAuthState());
+    }
+  }, [error, success, dispatch]);
 
-   const handleSubmit = (e) => {
-  e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  if (!email || !password) {
-    toast.error("Please enter email and password", { duration: 1000 });
-    return;
-  }
+    if (!email || !password) {
+      toast.error("Please enter email and password", { duration: 1000 });
+      return;
+    }
 
-  dispatch(loginUser({ email, password }));
-};
+    dispatch(loginUser({ email, password }));
+  };
 
   return (
     <div className="flex">
       <div className="w-full md:w-1/2 flex-col flex justify-center items-center p-6 md:p-10 lg:p-0">
-        <form className="w-full max-w-md bg-white rounded-lg border p-6 lg:p-8 shadow-sm"
+        <form
+          className="w-full max-w-md bg-white rounded-lg border p-6 lg:p-8 shadow-sm"
           onSubmit={handleSubmit}
         >
-          <h2 className="text-lg md:text-xl lg:text-2xl font-bold text-center mb-2 ">Hey There!👋</h2>
+          <h2 className="text-lg md:text-xl lg:text-2xl font-bold text-center mb-2 ">
+            Hey There!👋
+          </h2>
           <h1 className=" text-center mb-2 ">Welcome To</h1>
           <div className="flex justify-center mb-8">
-            
-            <h2 className="text-lg md:text-xl lg:text-2xl font-bold">The Drip Store</h2>
+            <h2 className="text-lg md:text-xl lg:text-2xl font-bold">
+              The Drip Store
+            </h2>
           </div>
-          
+
           <p className="text-center mb-8 text-xs md:text-xs lg:text- whitespace-nowrap">
             Enter your e-mail and password to login
           </p>
@@ -90,16 +96,28 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full p-2 border rounded"
             />
-            
+            <div className="forgot-password text-right mt-2">
+              <Link
+                to="/forgot-password"
+                className="text-blue-600 font-medium text-xs hover:text-blue-800 hover:underline transition duration-200"
+              >
+                Forgot Password?
+              </Link>
+            </div>
           </div>
-          <button type="submit"
+          <button
+            type="submit"
             disabled={loading}
-            className="bg-black text-white w-full p-2 rounded-lg font-semibold hover:bg-gray-800 transition ">
-            {loading?"Loading...":"Sign in"}
+            className="bg-black text-white w-full p-2 rounded-lg font-semibold hover:bg-gray-800 transition "
+          >
+            {loading ? "Loading..." : "Sign in"}
           </button>
           <p className="mt-6 text-center text-sm">
-            Don't have an account? { }
-            <Link to={`/register?redirect=${encodeURIComponent(redirect)}`} className="text-blue-500">
+            Don't have an account? {}
+            <Link
+              to={`/register?redirect=${encodeURIComponent(redirect)}`}
+              className="text-blue-500"
+            >
               Register
             </Link>
           </p>
@@ -107,9 +125,13 @@ const Login = () => {
       </div>
 
       <div className="hidden md:block w-1/2 bg-gray-800 ">
-         <div className="h-full flex flex-col justify-center items-center">
-          <img src={login} alt="Login to account" className="w-full h-[600px] object-cover " />
-         </div>
+        <div className="h-full flex flex-col justify-center items-center">
+          <img
+            src={login}
+            alt="Login to account"
+            className="w-full h-[600px] object-cover "
+          />
+        </div>
       </div>
     </div>
   );

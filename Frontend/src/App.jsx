@@ -26,6 +26,8 @@ import AboutUs from "./pages/AboutUs";
 import FAQ from "./pages/FAQ";
 import ContactUs from "./pages/ContactUs";
 import Features from "./pages/Features";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 const App = () => {
   return (
@@ -34,11 +36,13 @@ const App = () => {
         <Toaster position="top-right" richColors />
          <ScrollToTop />
         <Routes>
+           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/" element={<UserLayout />}>
             {/*User Layout*/}
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+            <Route path="forgot-password" element={<ForgotPassword />} />
             <Route path="profile" element={<Profile />} />
             <Route
               path="collections/:collection"
