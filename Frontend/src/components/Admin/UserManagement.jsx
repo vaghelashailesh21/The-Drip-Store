@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import { addUser, deleteUser, fetchUsers, updateUser } from "../../Redux/slices/adminSlice";
 
 const UserManagement = () => {
@@ -10,6 +12,13 @@ const UserManagement = () => {
   const { user } = useSelector((state) => state.auth);
   const { users, loading, error } = useSelector((state) => state.admin);
 
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "customer",
+  });
+
   useEffect(() => {
     if (user && user.role !== "admin") navigate("/");
   }, [user, navigate]);
@@ -17,13 +26,6 @@ const UserManagement = () => {
   useEffect(() => {
     if (user && user.role === "admin") dispatch(fetchUsers());
   }, [dispatch, user]);
-
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    role: "customer",
-  });
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -44,32 +46,98 @@ const UserManagement = () => {
     }
   };
 
-  if (loading)
+  // Loading Skeleton UI
+  if (loading) {
     return (
-      <div className="max-w-7xl mx-auto p-6">
-        <h2 className="text-2xl font-bold mb-6">User Management</h2>
-        <p>Loading users...</p>
-      </div>
-    );
-
-  if (error)
-    return (
-      <div className="max-w-4xl mx-auto p-6 text-center">
-        <div className="text-5xl mb-4">👤</div>
-        <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-2">
-          Failed to load users
+      <div className="max-w-7xl mx-auto p-6 space-y-6">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-4">
+          <Skeleton width={200} />
         </h2>
-        <p className="text-gray-500 max-w-md mb-6">
-          We couldn’t fetch user data. Please try again.
-        </p>
-        <button
-          onClick={() => window.location.reload()}
-          className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition"
-        >
-          Retry
-        </button>
+
+        {/* Add User Form Skeleton */}
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md space-y-3">
+          <h3 className="text-lg font-bold mb-4">
+            <Skeleton width={150} />
+          </h3>
+          {Array(4)
+            .fill(0)
+            .map((_, i) => (
+              <Skeleton key={i} height={35} className="mb-3" />
+            ))}
+          <Skeleton width={100} height={35} />
+        </div>
+
+        {/* Mobile Cards Skeleton */}
+        <div className="grid sm:hidden gap-4">
+          {Array(3)
+            .fill(0)
+            .map((_, i) => (
+              <div
+                key={i}
+                className="bg-white p-4 rounded-lg shadow-md space-y-2"
+              >
+                <Skeleton width={`60%`} height={20} />
+                <Skeleton width={`80%`} height={15} />
+                <Skeleton width={`40%`} height={15} />
+                <Skeleton width={`50%`} height={15} />
+              </div>
+            ))}
+        </div>
+
+        {/* Desktop Table Skeleton */}
+        <div className="hidden sm:block overflow-x-auto shadow-md rounded-lg">
+          <table className="min-w-full text-left text-gray-500">
+            <thead className="bg-gray-100 text-xs sm:text-sm uppercase text-gray-700">
+              <tr>
+                {["Name", "Email", "Role", "Actions"].map((h, i) => (
+                  <th key={i} className="py-3 px-4">
+                    <Skeleton width={80} />
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {Array(5)
+                .fill(0)
+                .map((_, i) => (
+                  <tr key={i} className="border-b">
+                    {Array(4)
+                      .fill(0)
+                      .map((__, j) => (
+                        <td key={j} className="py-4 px-4">
+                          <Skeleton width={`90%`} height={20} />
+                        </td>
+                      ))}
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
+  }
+
+// Error UI
+if (error) {
+  return (
+    <div className="min-h-screen flex flex-col items-center 
+                    justify-start sm:justify-center pt-20 sm:pt-0 bg-gray-50">
+      <div className="text-6xl mb-4">👤</div>
+      <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-2 text-center">
+        Failed to load users
+      </h2>
+      <p className="text-gray-500 max-w-md mb-6 text-center">
+        We couldn’t fetch user data. Please try again.
+      </p>
+      <button
+        onClick={() => window.location.reload()}
+        className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition"
+      >
+        Retry
+      </button>
+    </div>
+  );
+}
 
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6 space-y-6">
@@ -79,51 +147,42 @@ const UserManagement = () => {
       <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md">
         <h3 className="text-lg font-bold mb-4">Add New User</h3>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-gray-700 mb-1">Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-gray-700 mb-1">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-gray-700 mb-1">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-gray-700 mb-1">Role</label>
-            <select
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-            >
-              <option value="customer">Customer</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Name"
+            className="w-full p-2 border rounded"
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Email"
+            className="w-full p-2 border rounded"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="Password"
+            className="w-full p-2 border rounded"
+            required
+          />
+          <select
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+          >
+            <option value="customer">Customer</option>
+            <option value="admin">Admin</option>
+          </select>
           <button
             type="submit"
             className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
