@@ -6,6 +6,8 @@ import {
   updateProduct,
 } from "../../Redux/slices/productsSlice";
 import axios from "axios";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const EditProductPage = () => {
   const dispatch = useDispatch();
@@ -13,7 +15,7 @@ const EditProductPage = () => {
   const { id } = useParams();
 
   const { selectedProduct, loading, error } = useSelector(
-    (state) => state.products,
+    (state) => state.products
   );
 
   const [productData, setProductData] = useState({
@@ -60,22 +62,26 @@ const EditProductPage = () => {
     }));
   };
 
+  // Upload Image
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
+    if (!file) return;
+
     const formData = new FormData();
     formData.append("image", file);
 
     try {
       setUploading(true);
+
       const { data } = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/upload`,
         formData,
-        { headers: { "Content-Type": "multipart/form-data" } },
+        { headers: { "Content-Type": "multipart/form-data" } }
       );
 
       setProductData((prev) => ({
         ...prev,
-        images: [...prev.images, { url: data.imageUrl, altText: "" }],
+        images: [...prev.images, { url: data.imageUrl }],
       }));
 
       setUploading(false);
@@ -85,232 +91,184 @@ const EditProductPage = () => {
     }
   };
 
+  // Remove Image
+  const handleRemoveImage = (index) => {
+    setProductData((prev) => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index),
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     await dispatch(updateProduct({ id, productData }));
     navigate("/admin/products");
   };
 
+  // ================= LOADING =================
   if (loading) {
-    return <div className="p-6">Loading...</div>;
+    return (
+      <div className="max-w-5xl mx-auto p-4 sm:p-6 space-y-6">
+        <Skeleton height={35} width={200} />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {Array(8)
+            .fill(0)
+            .map((_, i) => (
+              <Skeleton key={i} height={40} />
+            ))}
+        </div>
+
+        <Skeleton height={100} />
+
+        <Skeleton height={40} />
+        <Skeleton height={40} />
+
+        <Skeleton height={50} />
+      </div>
+    );
   }
 
+  // ================= ERROR =================
   if (error) {
-    return <div className="p-6 text-red-500">Error loading product</div>;
+    return (
+      <div className="min-h-[60vh] md:min-h-screen flex items-start md:items-center justify-center pt-16 md:pt-0 px-4">
+        <div className="text-center">
+          <div className="text-6xl mb-4">✏️</div>
+          <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-2">
+            Failed to load product
+          </h2>
+          <p className="text-gray-500 max-w-md mb-6">
+            We couldn’t fetch product details. Please try again.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
   }
 
+  // ================= MAIN =================
   return (
-    <div className="max-w-5xl mx-auto p-4 sm:p-6 shadow-md rounded-md">
-      <h2 className="text-2xl sm:text-3xl font-bold mb-6">Edit Product</h2>
+    <div className="max-w-5xl mx-auto p-4 sm:p-6 shadow-md rounded-md bg-white">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-6">
+        Edit Product
+      </h2>
 
       <form onSubmit={handleSubmit} className="space-y-6">
+
         {/* GRID */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Name */}
-          <div>
-            <label className="block font-semibold mb-1">Product Name</label>
-            <input
-              type="text"
-              name="name"
-              value={productData.name}
-              onChange={handleChange}
-              className="w-full border p-2 rounded"
-            />
-          </div>
 
-          {/* Price */}
-          <div>
-            <label className="block font-semibold mb-1">Price</label>
-            <input
-              type="number"
-              name="price"
-              value={productData.price}
-              onChange={handleChange}
-              className="w-full border p-2 rounded"
-            />
-          </div>
+          <input name="name" value={productData.name} onChange={handleChange} className="border p-2 rounded" placeholder="Name" />
+          <input type="number" name="price" value={productData.price} onChange={handleChange} className="border p-2 rounded" placeholder="Price" />
+          <input type="number" name="countInStock" value={productData.countInStock} onChange={handleChange} className="border p-2 rounded" placeholder="Stock" />
+          <input name="sku" value={productData.sku} onChange={handleChange} className="border p-2 rounded" placeholder="SKU" />
 
-          {/* Stock */}
-          <div>
-            <label className="block font-semibold mb-1">Stock</label>
-            <input
-              type="number"
-              name="countInStock"
-              value={productData.countInStock}
-              onChange={handleChange}
-              className="w-full border p-2 rounded"
-            />
-          </div>
+          <select name="category" value={productData.category} onChange={handleChange} className="border p-2 rounded">
+            <option value="">Category</option>
+            <option value="Top Wear">Top Wear</option>
+            <option value="Bottom Wear">Bottom Wear</option>
+          </select>
 
-          {/* SKU */}
-          <div>
-            <label className="block font-semibold mb-1">SKU</label>
-            <input
-              type="text"
-              name="sku"
-              value={productData.sku}
-              onChange={handleChange}
-              className="w-full border p-2 rounded"
-            />
-          </div>
+          <select name="gender" value={productData.gender} onChange={handleChange} className="border p-2 rounded">
+            <option value="">Gender</option>
+            <option value="Men">Men</option>
+            <option value="Women">Women</option>
+            <option value="Unisex">Unisex</option>
+          </select>
 
-          {/* Category */}
-          <div>
-            <label className="block font-semibold mb-1">Category</label>
-            <select
-              name="category"
-              value={productData.category}
-              onChange={handleChange}
-              className="w-full border p-2 rounded"
-            >
-              <option value="">Select Category</option>
-              <option value="Top Wear">Top Wear</option>
-              <option value="Bottom Wear">Bottom Wear</option>
-            </select>
-          </div>
+          <input name="collections" value={productData.collections} onChange={handleChange} className="border p-2 rounded" placeholder="Collection" />
 
-          {/* Gender */}
-          <div>
-            <label className="block font-semibold mb-1">Gender</label>
-            <select
-              name="gender"
-              value={productData.gender}
-              onChange={handleChange}
-              className="w-full border p-2 rounded"
-            >
-              <option value="">Select</option>
-              <option value="Men">Men</option>
-              <option value="Women">Women</option>
-              <option value="Unisex">Unisex</option>
-            </select>
-          </div>
-
-          {/* Material */}
-          <div>
-            <label className="block font-semibold mb-1">Material</label>
-            <select
-              name="material"
-              value={productData.material}
-              onChange={handleChange}
-              className="w-full border p-2 rounded"
-            >
-              <option value="">Select Material</option>
-              <option value="cotton">Cotton</option>
-              <option value="polyester">Polyester</option>
-              <option value="denim">Denim</option>
-              <option value="linen">Linen</option>
-              <option value="wool">Wool</option>
-              <option value="leather">Leather</option>
-              <option value="fleece">Fleece</option>
-            </select>
-          </div>
-
-          {/* Collection */}
-          <div>
-            <label className="block font-semibold mb-1">Collection</label>
-            <input
-              type="text"
-              name="collections"
-              value={productData.collections}
-              onChange={handleChange}
-              className="w-full border p-2 rounded"
-            />
-          </div>
         </div>
 
         {/* Description */}
-        <div>
-          <label className="block font-semibold mb-1">Description</label>
-          <textarea
-            name="description"
-            value={productData.description}
-            onChange={handleChange}
-            className="w-full border p-2 rounded"
-            rows={4}
-          />
-        </div>
+        <textarea
+          name="description"
+          value={productData.description}
+          onChange={handleChange}
+          className="w-full border p-2 rounded"
+          rows={4}
+          placeholder="Description"
+        />
 
         {/* Sizes */}
-        <div>
-          <label className="block font-semibold mb-1">Sizes</label>
-          <input
-            type="text"
-            value={productData.sizes.join(",")}
-            onChange={(e) =>
-              setProductData({
-                ...productData,
-                sizes: e.target.value.split(",").map((s) => s.trim()),
-              })
-            }
-            className="w-full border p-2 rounded"
-          />
-        </div>
+        <input
+          type="text"
+          value={productData.sizes.join(",")}
+          onChange={(e) =>
+            setProductData({
+              ...productData,
+              sizes: e.target.value.split(",").map((s) => s.trim()),
+            })
+          }
+          className="border p-2 rounded w-full"
+          placeholder="Sizes (S, M, L)"
+        />
 
         {/* Colors */}
-        <div>
-          <label className="block font-semibold mb-1">Colors</label>
-          <input
-            type="text"
-            value={productData.colors.join(",")}
-            onChange={(e) =>
-              setProductData({
-                ...productData,
-                colors: e.target.value.split(",").map((c) => c.trim()),
-              })
-            }
-            className="w-full border p-2 rounded"
-          />
-        </div>
+        <input
+          type="text"
+          value={productData.colors.join(",")}
+          onChange={(e) =>
+            setProductData({
+              ...productData,
+              colors: e.target.value.split(",").map((c) => c.trim()),
+            })
+          }
+          className="border p-2 rounded w-full"
+          placeholder="Colors"
+        />
 
         {/* Toggles */}
-        <div className="flex flex-col sm:flex-row gap-4">
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              name="isFeatured"
-              checked={productData.isFeatured}
-              onChange={handleChange}
-            />
-            Featured Product
+        <div className="flex gap-4">
+          <label className="flex gap-2">
+            <input type="checkbox" name="isFeatured" checked={productData.isFeatured} onChange={handleChange} />
+            Featured
           </label>
-
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              name="isPublished"
-              checked={productData.isPublished}
-              onChange={handleChange}
-            />
+          <label className="flex gap-2">
+            <input type="checkbox" name="isPublished" checked={productData.isPublished} onChange={handleChange} />
             Published
           </label>
         </div>
 
         {/* Image Upload */}
         <div>
-          <label className="block font-semibold mb-1">Upload Images</label>
           <input type="file" onChange={handleImageUpload} />
 
           {uploading && (
-            <div className="w-20 h-20 bg-gray-200 animate-pulse mt-2"></div>
+            <div className="flex gap-2 mt-2">
+              <Skeleton width={80} height={80} />
+              <Skeleton width={80} height={80} />
+            </div>
           )}
 
-          <div className="grid grid-cols-3 sm:flex gap-4 mt-4">
+          <div className="flex flex-wrap gap-4 mt-4">
             {productData.images?.map((img, i) => (
-              <img
-                key={i}
-                src={img.url}
-                alt=""
-                className="w-20 h-20 object-cover rounded"
-              />
+              <div key={i} className="relative">
+                <img
+                  src={img.url}
+                  alt=""
+                  className="w-20 h-20 object-cover rounded"
+                />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveImage(i)}
+                  className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center"
+                >
+                  ✕
+                </button>
+              </div>
             ))}
           </div>
         </div>
 
         {/* Submit */}
-        <button
-          type="submit"
-          className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600"
-        >
+        <button className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">
           Update Product
         </button>
       </form>
