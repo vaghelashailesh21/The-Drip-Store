@@ -62,6 +62,35 @@ const ProductGrid = ({ products, loading, error }) => {
   );
 }
 
+// ================= NO PRODUCTS =================
+if (!loading && (!products || products.length === 0)) {
+  return (
+    <div className="min-h-[50vh] flex flex-col items-center justify-center text-center px-4">
+      
+      {/* Icon */}
+      <div className="text-6xl mb-4">🛍️</div>
+
+      {/* Title */}
+      <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-2">
+        No products found
+      </h2>
+
+      {/* Description */}
+      <p className="text-gray-500 max-w-md mb-6">
+        Try changing filters or explore other collections.
+      </p>
+
+      {/* Button */}
+      <button
+        onClick={() => window.location.href = "/collections/all"}
+        className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition"
+      >
+        Explore Products
+      </button>
+    </div>
+  );
+}
+
   return (
     <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-0">
       {products.map((product, index) => (

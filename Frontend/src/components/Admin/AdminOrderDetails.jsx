@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { fetchOrderById } from "../../Redux/slices/adminOrderSlice";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const AdminOrderDetails = () => {
   const { id } = useParams();
@@ -15,8 +17,123 @@ const AdminOrderDetails = () => {
     dispatch(fetchOrderById(id));
   }, [dispatch, id]);
 
-  if (loading) return <p className="p-6">Loading...</p>;
-  if (error) return <p className="p-6 text-red-500">Error loading order</p>;
+ // ================= LOADING =================
+if (loading) {
+  return (
+    <div className="max-w-7xl mx-auto p-4 sm:p-6">
+      {/* Title */}
+      <Skeleton height={30} width={250} className="mb-6" />
+
+      <div className="p-4 sm:p-6 bg-white shadow-md rounded-xl space-y-6">
+        
+        {/* Top Section */}
+        <div className="flex flex-col sm:flex-row justify-between gap-4">
+          <div>
+            <Skeleton height={20} width={220} className="mb-2" />
+            <Skeleton height={15} width={140} />
+          </div>
+
+          <div className="flex flex-col sm:items-end gap-2">
+            <Skeleton height={25} width={80} />
+            <Skeleton height={25} width={140} />
+          </div>
+        </div>
+
+        {/* Customer + Payment + Shipping */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          
+          {/* Customer */}
+          <div className="bg-gray-50 p-4 rounded space-y-2">
+            <Skeleton height={18} width={120} />
+            <Skeleton height={15} />
+            <Skeleton height={15} />
+          </div>
+
+          {/* Payment */}
+          <div className="bg-gray-50 p-4 rounded space-y-2">
+            <Skeleton height={18} width={120} />
+            <Skeleton height={15} />
+            <Skeleton height={15} />
+          </div>
+
+          {/* Shipping */}
+          <div className="bg-gray-50 p-4 rounded space-y-2">
+            <Skeleton height={18} width={120} />
+            <Skeleton height={15} />
+            <Skeleton height={15} />
+          </div>
+        </div>
+
+        {/* Products Table */}
+        <div className="overflow-x-auto">
+          <Skeleton height={20} width={120} className="mb-4" />
+
+          {/* Table Header */}
+          <div className="grid grid-cols-4 gap-4 mb-2">
+            {["Name", "Price", "Qty", "Total"].map((_, i) => (
+              <Skeleton key={i} height={20} />
+            ))}
+          </div>
+
+          {/* Table Rows */}
+          {Array(3)
+            .fill(0)
+            .map((_, i) => (
+              <div key={i} className="grid grid-cols-4 gap-4 py-3 items-center">
+                {/* Product */}
+                <div className="flex items-center gap-3">
+                  <Skeleton height={50} width={50} />
+                  <Skeleton height={15} width={120} />
+                </div>
+
+                {/* Price */}
+                <Skeleton height={15} width={60} />
+
+                {/* Qty */}
+                <Skeleton height={15} width={40} />
+
+                {/* Total */}
+                <Skeleton height={15} width={80} />
+              </div>
+            ))}
+        </div>
+
+        {/* Total */}
+        <div className="flex justify-end">
+          <Skeleton height={20} width={180} />
+        </div>
+
+        {/* Back button */}
+        <Skeleton height={20} width={150} />
+      </div>
+    </div>
+  );
+};
+
+
+  // ================= ERROR =================
+if (error) {
+  return (
+    <div className="min-h-[60vh] md:min-h-screen flex items-start md:items-center justify-center pt-16 md:pt-0 px-4">
+      <div className="text-center">
+        <div className="text-6xl mb-4">📦</div>
+        <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-2">
+          Failed to load order
+        </h2>
+        <p className="text-gray-500 max-w-md mb-6">
+          We couldn’t fetch order details. Please try again.
+        </p>
+        <button
+          onClick={() => window.location.reload()}
+          className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition"
+        >
+          Retry
+        </button>
+      </div>
+    </div>
+  );
+}
+
   if (!selectedOrder) return <p className="p-6">Order not found</p>;
 
   return (

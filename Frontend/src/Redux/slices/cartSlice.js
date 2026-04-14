@@ -91,22 +91,24 @@ export const removeFromCart = createAsyncThunk(
 // Merge guest cart into user cart
 export const mergeCart = createAsyncThunk(
   "cart/mergeCart",
-  async ({ guestId, user }, { rejectWithValue }) => {
+  async ({ guestId, userId }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/cart/merge`,
-        { guestId, user },
+        { guestId, userId }, // 🔥 FIXED
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("userToken")}`,
           },
-        },
+        }
       );
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(
+        error.response?.data || { message: "Server error" }
+      );
     }
-  },
+  }
 );
 
 const cartSlice = createSlice({
@@ -181,6 +183,7 @@ const cartSlice = createSlice({
     })
         .addCase(mergeCart.fulfilled, (state, action) => {  
         state.loading = false;
+        console.log("✅ MERGE RESULT:", action.payload);
         state.cart = action.payload;
         saveCartToStorage(action.payload); 
     })

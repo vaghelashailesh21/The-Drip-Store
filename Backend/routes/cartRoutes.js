@@ -170,82 +170,88 @@ router.get("/", async (req, res) => {
 
   try {
     const cart = await getCart(userId, guestId);
-    if(cart) {
+    if (cart) {
       res.json(cart);
     } else {
-        res.status(404).json({ message: "Cart not found" });
-    }  
+      res.status(404).json({ message: "Cart not found" });
+    }
   } catch (error) {
     console.error(error);
-    res.status(500).json({message: "Server error"});
+    res.status(500).json({ message: "Server error" });
   }
 });
 
 // @route POST /api/cart/merge
 // @desc Merge guest cart into user cart on login
-// @access private
+// @access Private
 router.post("/merge", protect, async (req, res) => {
-  const {guestId} = req.body;
+  const { guestId } = req.body;
 
   try {
-    // Find the guest cart and the user cart
+    console.log("🔥 MERGE BODY:", req.body);
+
+    // 🔍 Find carts
     const guestCart = await Cart.findOne({ guestId });
-    const userCart = await Cart.findOne({ user: req.user._id });
+    let userCart = await Cart.findOne({ user: req.user._id });
 
-   if (guestCart) {
-      if(guestCart.products.length === 0) {
-        return res.status(400).json({ message: "Guest cart is empty" });
-      }
-      if (userCart) {
-      //Merge guest cart into user cart
-      guestCart.products.forEach((guestItem) => {
-        const productIndex = userCart.products.findIndex(
-          (item) => 
-            item.productId.toString() === guestItem.productId.toString() &&
-            item.size === guestItem.size &&
-            item.color === guestItem.color
-        );
-
-        if (productIndex > -1) {
-          //If the items exitsin the user cart, update the quantity
-          userCart.products[productIndex].quantity += guestItem.quantity;
-        } else {
-          //Otherwise, add the guest item to the cart
-          userCart.products.push(guestCart);
-        }
+    // ✅ If user has no cart → create one
+    if (!userCart) {
+      userCart = new Cart({
+        user: req.user._id,
+        products: [],
+        totalPrice: 0,
       });
+    }
 
-      userCart.totalPrice = userCart.products.reduce(
-        (acc, item) => acc + item.price * item.quantity,
-        0
+    // ✅ If guest cart doesn't exist or empty → return user cart
+    if (!guestCart || !guestCart.products || guestCart.products.length === 0) {
+      await userCart.save(); // ✅ IMPORTANT
+      return res.status(200).json(userCart);
+    }
+
+    // 🔥 MERGE LOGIC
+    guestCart.products.forEach((guestItem) => {
+      const existingIndex = userCart.products.findIndex(
+        (item) =>
+          item.productId.toString() === guestItem.productId.toString() &&
+          item.size === guestItem.size &&
+          item.color === guestItem.color,
       );
-      await userCart.save();
 
-      // Remove the guest cart after merging
-      try {
-        await Cart.findOneAndDelete({guestId});
-      } catch (error) {
-        console.error("Error deleting guest cart:", error);
+      if (existingIndex > -1) {
+        // ✅ Same product → increase quantity
+        userCart.products[existingIndex].quantity += guestItem.quantity;
+      } else {
+        // ✅ New product → add to cart
+        userCart.products.push({
+          productId: guestItem.productId,
+          name: guestItem.name,
+          image: guestItem.image,
+          price: guestItem.price,
+          size: guestItem.size,
+          color: guestItem.color,
+          quantity: guestItem.quantity,
+        });
       }
-      res.status(200).json(userCart);
-    } else {
-      // If the user has no existing cart, assign the guest cart to the user 
-      guestCart.user = req.user._id;
-      guestCart.guestId = undefined;
-      await guestCart.save();
+    });
 
-      res.status(200).json(guestCart);
-    }
-    } else {
-      if(userCart) {
-        //Guest cart has already been merged, return user cart
-        return res.status(200).json(userCart);
-      }
-      res.status(404).json({ message: "Guest cart not found"});
-    }
+    // ✅ Recalculate total price
+    userCart.totalPrice = userCart.products.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0,
+    );
+
+    // 💾 Save updated cart
+    await userCart.save();
+
+    // 🧹 Delete guest cart after merge
+    await Cart.findOneAndDelete({ guestId });
+
+    // ✅ Return updated user cart
+    res.status(200).json(userCart);
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: "Server error"});
+    console.error("❌ MERGE ERROR:", error);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
