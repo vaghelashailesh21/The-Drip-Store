@@ -2,7 +2,8 @@
 
 **The Drip Store** is a full-stack MERN e-commerce web application developed as a college project for a clothing brand. It provides a complete online shopping experience where users can browse products, manage their cart, and place secure orders.
 
-🔗 **Live Website:** https://the-drip-store-x2h2.vercel.app/
+🔗 **Live Website:** https://the-drip-store-x2h2.vercel.app/  
+
 📂 **GitHub Repository:** https://github.com/vaghelashailesh21/The-Drip-Store
 
 ---
