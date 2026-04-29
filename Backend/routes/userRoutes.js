@@ -113,12 +113,10 @@ router.post("/forgot-password", async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
-    console.log("User found for password reset:", user);
     if (!user) return res.status(404).json({ message: "User not found" });
 
     // Generate a secure token
     const token = crypto.randomBytes(32).toString("hex");
-    console.log("Generated reset token:", token);
 
     // Save token and expiry to user
     user.resetPasswordToken = token;
@@ -180,7 +178,6 @@ router.post("/forgot-password", async (req, res) => {
   </div>
   `,
     });
-    console.log("Password reset email sent to:", user.email);
     res.json({ message: "Password reset link sent to your email" });
   } catch (error) {
     console.error(error);
