@@ -142,8 +142,8 @@ router.post("/forgot-password", async (req, res) => {
       html: `
   <div style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
     <div style="max-width: 500px; margin: auto; background: #ffffff; padding: 30px; border-radius: 8px; border: 1px solid #e5e5e5;">
-      
-      <h2 style="text-align: center; color: #000;">Reset Your Password</h2>
+      <h1 style="text-align: center; color: #000;">The Drip Store</h1>
+      <h3 style="text-align: center; color: #000;">Reset Your Password</h3>
       
       <p style="color: #555; font-size: 14px;">
         Hey ${user.name || "there"},
